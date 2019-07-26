@@ -16,14 +16,15 @@ bzapi = bugzilla.Bugzilla(URL,api_key)
 # IDs, if you need to fetch multiple
 #
 # Example bug: https://partner-bugzilla.redhat.com/show_bug.cgi?id=427301
-bug = bzapi.getbug(1700044)
-print("Fetched bug #%s:" % bug.id)
-print("  Product   = %s" % bug.product)
-print("  Component = %s" % bug.component)
-print("  Status    = %s" % bug.status)
-print("  Resolution= %s" % bug.resolution)
-print("  Summary   = %s" % bug.summary)
-print("  comment   = %s" % bug.comment)
+bug = bzapi.getbug(1647991)
+
+# print("Fetched bug #%s:" % bug.id)
+# print("  Product   = %s" % bug.product)
+# print("  Component = %s" % bug.component)
+# print("  Status    = %s" % bug.status)
+# print("  Resolution= %s" % bug.resolution)
+# print("  Summary   = %s" % bug.summary)
+# print("  comment   = %s" % bug.comment)
 
 # Just check dir(bug) for other attributes, or check upstream bugzilla
 # Bug.get docs for field names:
@@ -32,9 +33,15 @@ print("  comment   = %s" % bug.comment)
 # comments must be fetched separately on stock bugzilla. this just returns
 # a raw dict with all the info.
 comments = bug.getcomments()
-print("\nLast comment data:\n%s" % pprint.pformat(comments[-1]))
-
-#todo make recurse over the bug comments and retrieve the bz_auto_reproducer shell command
+# print("\nLast comment data:\n%s" % pprint.pformat(comments[-1]))
 
 # getcomments is just a wrapper around bzapi.get_comments(), which can be
 # used for bulk comments fetching
+
+# #todo make recurse over the bug comments and retrieve the bz_auto_reproducer shell command
+#
+for comment in comments:
+    # print(comment['text'])
+    if 'auto-verification-command' in comment['text']:
+        print(comments[-1]['text'].split("auto-verification-command:", 1)[1])
+
