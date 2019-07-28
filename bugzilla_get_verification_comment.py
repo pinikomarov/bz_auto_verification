@@ -38,6 +38,13 @@ comments = bug.getcomments()
 # getcomments is just a wrapper around bzapi.get_comments(), which can be
 # used for bulk comments fetching
 
+#todo : get a search results list for bugs with :
+# dfg:pidone & status: on_qa , then go over those bugs
+
+
+
+#todo : for bug in list:
+#todo : check for a match on topology
 # #todo make recurse over the bug comments and retrieve the bz_auto_reproducer shell command
 #
 for comment in comments:
@@ -45,3 +52,4 @@ for comment in comments:
     if 'auto-verification-command' in comment['text']:
         print(comments[-1]['text'].split("auto-verification-command:", 1)[1])
 
+#todo : execute on the undercloud
